@@ -2,7 +2,7 @@
 using SharpDX;
 using SharpDX.Direct2D1;
 using SharpDX.DirectInput;
-
+//АГУ: Смешивать слова обращение к разным уровням в одном предложении НЕЛЬЯЗ!!!!
 namespace SnakeGIT
 {
     public class Snake2 : Snake
@@ -10,7 +10,7 @@ namespace SnakeGIT
         public new int dx;
         public new int dy;
         public new int score;
-        public new int speed = 6;
+        public new int speed = 12;
         public new int hp = Constants.HP;
         public new void Update()
         {

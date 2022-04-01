@@ -55,7 +55,7 @@ namespace SnakeGIT
         Snake snake;
         Snake2 snake2;
 
-        Stats snakescore;
+        Stats snakescore, snakehp;
 
 
 
@@ -67,6 +67,8 @@ namespace SnakeGIT
         bool sleeping = false;
         int frame = 0;
         int dice;
+
+        bool hpflag = false;
 
         public SnakeGame()
         {
@@ -105,9 +107,9 @@ namespace SnakeGIT
             //Draw();
 
 
-            if (snake.hp > 0 && snake2.hp > 0 && snake.score < 10 && snake2.score < 10) Draw();
+            if (snakehp.hp > 0 && snake2.hp > 0 && snake.score < 10 && snake2.score < 10) Draw();
             else if (snake.score >= 10 || snake2.hp <= 0) Win("Player1");
-            else if (snake2.score >= 10 || snake.hp <= 0) Win("Player2");
+            else if (snake2.score >= 10 || snakehp.hp <= 0) Win("Player2");
 
             stopwatch.Stop();
             var sleepTime = (int)(1000f / Constants.FRAMES_PER_SECOND - stopwatch.ElapsedMilliseconds);
@@ -139,8 +141,8 @@ namespace SnakeGIT
             rng = new Random();
             rnd = new Random();
 
-            hpfruit = new Fruits1();
-            scorefruit = new Fruits1() {x = 5,  y= 5 };
+            hpfruit = new Fruits1() { x = 10, y = 10 };
+            scorefruit = new Fruits1() { x = 5, y = 5 };
             speedfruit = new Fruits1();
 
 
@@ -178,7 +180,7 @@ namespace SnakeGIT
 
 
             snakescore = new SnakeStats();
-
+            snakehp = new SnakeStats();
 
 
             snake.init();
@@ -208,10 +210,16 @@ namespace SnakeGIT
             {
                 System.Diagnostics.Process.GetCurrentProcess().Kill();
             }
+            snake.HandleInput();
+            snake2.HandleInput();
 
             if (frame % snake.speed == 0)
             {
                 snake.Update();
+                if (snake.CheckCollision(Constants.MAPX - 1, Constants.MAPY - 1, 1) || snake.CheckCollision(Constants.MAPX + Constants.MAPSIZE, Constants.MAPY + Constants.MAPSIZE, 1))
+                {
+                    snakehp.hp--;
+                }
                 snake.HandleInput();
             }
             if (frame % snake2.speed == 0)
@@ -225,33 +233,35 @@ namespace SnakeGIT
                 frame = 0;
             }
 
+            
 
 
-            dice = rnd.Next(0, 100);
+            dice = rnd.Next(0, 1000);
+
+
             if (snake.CheckCollision(scorefruit.x, scorefruit.y))
             {
-                if (dice <= 60)
-                {
-                    scorefruit.generateFruit();
-                    if (snake.CheckCollision(scorefruit.x, scorefruit.y))
-                    {
-                        //snakescore = new SnakeStats();
-                        snakescore = new ScoreBonus(snakescore);
-                        //snakescore.SetStats();
-                    }
-
-                }
-            }
-             
-
-
-
-            /*if (snake.CheckCollision(apple.x, apple.y))
-            {
+                snakescore = new ScoreBonus(snakescore);
                 snake.tail++;
-                snake.score++;
-                apple.generateFruit();
-            }*/
+
+                scorefruit.generateFruit(1);
+
+            }
+            if (snake.CheckCollision(hpfruit.x, hpfruit.y))
+            {
+                snakehp = new HpBonus(snakehp);
+                snakescore = new ScoreBonus(snakescore);
+                snake.tail++;
+                hpflag = false;
+            }
+
+            if (snake.CheckCollision(hpfruit.x, hpfruit.y) && dice >= 0 && !hpflag)
+            {
+                hpfruit.generateFruit(2);
+                hpflag = true;
+            }
+
+
 
             if (snake2.CheckCollision(apple2.x, apple2.y))
             {
@@ -277,11 +287,11 @@ namespace SnakeGIT
             d2dRenderTarget.DrawText($"{snake2.score}", text.TextFormatStats, new RectangleF(975, 100, 100, 100), new SolidColorBrush(d2dRenderTarget, Color.Black));
 
 
-            apple.Draw(d2dRenderTarget, d2dFactory);
+            //apple.Draw(d2dRenderTarget, d2dFactory);
             apple2.Draw(d2dRenderTarget, d2dFactory);
             snake.Draw(d2dRenderTarget, d2dFactory);
             snake2.Draw(d2dRenderTarget, d2dFactory);
-            for (int i = 0; i < snake.hp; i++)
+            for (int i = 0; i < snakehp.hp; i++)
             {
                 hp.Draw(d2dRenderTarget, d2dFactory, 30 + Constants.SPRITE_SIZE * i, Constants.SPRITE_SIZE * 26);
             }
@@ -293,6 +303,7 @@ namespace SnakeGIT
             map.generateMAP(d2dRenderTarget, d2dFactory, 1);
             map.generateMAP(d2dRenderTarget, d2dFactory, 2);
             scorefruit.Draw(d2dRenderTarget, d2dFactory);
+            hpfruit.Draw(d2dRenderTarget, d2dFactory);
 
             d2dRenderTarget.EndDraw();
             swapChain.Present(0, PresentFlags.None);

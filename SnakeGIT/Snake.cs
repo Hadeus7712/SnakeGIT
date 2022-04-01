@@ -7,25 +7,27 @@ namespace SnakeGIT
 {
     public class Snake : Drawable
     {
+
+        Stats stats = new SnakeStats();
+
+
         public Queue<Point> trail = new Queue<Point>();
         public int tail = Constants.INITIAL_TAIL;
         public int dx;
         public int dy;
         public int score;
         public int speed = 3;
-        public int hp = Constants.HP;
-
-        Stats stats = new SnakeStats();
+        public int hp;
 
         public Keyboard keyboard;
-
          
         public void init()
         {
             var directInput = new DirectInput();
             keyboard = new Keyboard(directInput);
             keyboard.Acquire();
-            //trail.Enqueue(new Point { X = x, Y = y });
+            //hp = stats.hp;
+
         }
         public bool CheckCollision(int x, int y)
         {
@@ -50,6 +52,8 @@ namespace SnakeGIT
 
         public void Update()
         {
+            
+
             x = (x + dx + Constants.SCREEN_SIZE) % Constants.SCREEN_SIZE;
             y = (y + dy + Constants.SCREEN_SIZE) % Constants.SCREEN_SIZE;
 
@@ -59,8 +63,7 @@ namespace SnakeGIT
                 dx = 0;
                 dy = 1;
                 tail = Constants.INITIAL_TAIL;
-                score = 0;
-                hp--;
+                //stats.hp--;
             }
 
 

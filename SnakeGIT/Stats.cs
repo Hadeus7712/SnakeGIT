@@ -26,7 +26,7 @@
         {
             hp = Constants.HP;
             speed = 3;
-            score = 1;
+            score = 0;
         }
     }
 
@@ -53,14 +53,17 @@
             this.score = score;
             this.speed = speed;
         }
-        
+        public override void SetStats()
+        {
+            if (stats != null) stats.SetStats();
+        }
     }
 
     public class HpBonus : Decorator
     {
-        public HpBonus(Stats stats) : base(stats.hp + 1, stats.score, stats.speed)
+        public HpBonus(Stats stats) : base(stats.hp, stats.score, stats.speed)
         {
-
+            SetStats();
         }
         public override void SetStats()
         {
@@ -70,9 +73,9 @@
 
     public class ScoreBonus : Decorator
     {
-        public ScoreBonus(Stats stats) : base(stats.hp, stats.score, stats.speed)
+        public ScoreBonus(Stats stats) : base(stats.hp, stats.score+1, stats.speed)
         {
-            SetStats();
+            //SetStats();
         }
         public override void SetStats()
         {
@@ -83,7 +86,7 @@
     public class SpeedBonus : Decorator
     {
 
-        public SpeedBonus(Stats stats) : base(stats.hp,stats.score, stats.speed - 2)
+        public SpeedBonus(Stats stats) : base(stats.hp,stats.score, stats.speed)
         {
 
         }
