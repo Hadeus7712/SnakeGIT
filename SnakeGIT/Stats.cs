@@ -25,7 +25,7 @@
         public override void SetStats()
         {
             hp = Constants.HP;
-            speed = 3;
+            speed = 6;
             score = 0;
         }
     }
@@ -34,12 +34,12 @@
     {
         public Snake2Stats() : base(Constants.HP, 0, 6)
         {
-
+            SetStats();
         }
         public override void SetStats()
         {
             hp = Constants.HP;
-            speed = 3;
+            speed = 6;
             score = 0;
         }
     }
@@ -88,11 +88,11 @@
 
         public SpeedBonus(Stats stats) : base(stats.hp,stats.score, stats.speed)
         {
-
+            SetStats();
         }
         public override void SetStats()
         {
-            speed -= 2;
+            speed = 2;
         }
     }
 

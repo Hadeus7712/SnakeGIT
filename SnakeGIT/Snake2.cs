@@ -9,11 +9,13 @@ namespace SnakeGIT
     {
         public new int dx;
         public new int dy;
-        public new int score;
-        public new int speed = 12;
-        public new int hp = Constants.HP;
+        public new int speed = 6;
+
+        public new bool death;
         public new void Update()
         {
+            death = false;
+
             x = (x + dx + Constants.SCREEN_SIZE) % Constants.SCREEN_SIZE;
             y = (y + dy + Constants.SCREEN_SIZE) % Constants.SCREEN_SIZE;
 
@@ -24,8 +26,7 @@ namespace SnakeGIT
                 dx = 0;
                 dy = 1;
                 tail = Constants.INITIAL_TAIL;
-                score = 0;
-                hp--;
+                death = true;
             }
 
             trail.Enqueue(new Point { X = x, Y = y });

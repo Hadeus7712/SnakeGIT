@@ -51,12 +51,12 @@ namespace SnakeGIT
         Color green = Color.Green;
 
         Fruits1 apple, hpfruit, scorefruit, speedfruit;
-        Fruits2 apple2;
+        Fruits2 apple2, hp2fruit, score2fruit, speed2fruit;
         Snake snake;
         Snake2 snake2;
 
-        Stats snakescore, snakehp;
-
+        Stats snakescore, snakehp, snakespeed;
+        Stats snake2score, snake2hp, snake2speed;
 
 
         HealthBar hp;
@@ -65,10 +65,19 @@ namespace SnakeGIT
         Map map;
 
         bool sleeping = false;
-        int frame = 0;
-        int dice;
+        int frame, speedFrame, speed2Frame = 0;
 
-        bool hpflag = false;
+
+        int bonusTime = 0, bonus2Time = 0;
+        bool eatBonus = true, eat2Bonus = true;
+
+        int dice, dice2;
+
+        bool bonusflag = false;
+        bool bonus2flag = false;
+
+        bool speed = false;
+        bool speed2 = false;
 
         public SnakeGame()
         {
@@ -107,9 +116,9 @@ namespace SnakeGIT
             //Draw();
 
 
-            if (snakehp.hp > 0 && snake2.hp > 0 && snake.score < 10 && snake2.score < 10) Draw();
-            else if (snake.score >= 10 || snake2.hp <= 0) Win("Player1");
-            else if (snake2.score >= 10 || snakehp.hp <= 0) Win("Player2");
+            if (snakehp.hp > 0 && snake2hp.hp > 0 && snakescore.score < 100 && snake2score.score < 100) Draw();
+            else if (snakescore.score >= 100 || snake2hp.hp <= 0) Win("Player1");
+            else if (snake2score.score >= 100 || snakehp.hp <= 0) Win("Player2");
 
             stopwatch.Stop();
             var sleepTime = (int)(1000f / Constants.FRAMES_PER_SECOND - stopwatch.ElapsedMilliseconds);
@@ -139,11 +148,15 @@ namespace SnakeGIT
             text = new Text(form);
 
             rng = new Random();
-            rnd = new Random();
+            rnd = new Random(2);
 
-            hpfruit = new Fruits1() { x = 10, y = 10 };
+            hpfruit = new Fruits1();
             scorefruit = new Fruits1() { x = 5, y = 5 };
             speedfruit = new Fruits1();
+
+            hp2fruit = new Fruits2();
+            score2fruit = new Fruits2() { x = 48, y = 5 };
+            speed2fruit = new Fruits2();
 
 
             // SwapChain description
@@ -181,6 +194,11 @@ namespace SnakeGIT
 
             snakescore = new SnakeStats();
             snakehp = new SnakeStats();
+            snakespeed = new SnakeStats();
+
+            snake2score = new Snake2Stats();
+            snake2hp = new Snake2Stats();
+            snake2speed = new Snake2Stats();
 
 
             snake.init();
@@ -200,7 +218,9 @@ namespace SnakeGIT
             scorefruit.Initialize(d2dRenderTarget, Color.PowderBlue);
             speedfruit.Initialize(d2dRenderTarget, Color.Purple);
 
-            //scorefruit.generateFruit();
+            hp2fruit.Initialize(d2dRenderTarget, red);
+            score2fruit.Initialize(d2dRenderTarget, Color.PowderBlue);
+            speed2fruit.Initialize(d2dRenderTarget, Color.Purple);
         }
 
         protected void Update()
@@ -213,32 +233,40 @@ namespace SnakeGIT
             snake.HandleInput();
             snake2.HandleInput();
 
-            if (frame % snake.speed == 0)
+            if (frame % snakespeed.speed == 0)
             {
                 snake.Update();
-                if (snake.CheckCollision(Constants.MAPX - 1, Constants.MAPY - 1, 1) || snake.CheckCollision(Constants.MAPX + Constants.MAPSIZE, Constants.MAPY + Constants.MAPSIZE, 1))
+                if (snake.death)
                 {
                     snakehp.hp--;
                 }
                 snake.HandleInput();
             }
-            if (frame % snake2.speed == 0)
+            if (frame % snake2speed.speed == 0)
             {
                 snake2.Update();
+                if (snake2.death)
+                {
+                    snake2hp.hp--;
+                }
                 snake2.HandleInput();
             }
             frame++;
-            if (frame % 60 == 0)
+
+            if (eatBonus)
             {
-                frame = 0;
+                bonusTime++;
+            }
+            if (eat2Bonus)
+            {
+                bonus2Time++;
             }
 
-            
 
+            dice = rnd.Next(0, 10);
+            dice2 = rng.Next(0, 10);
 
-            dice = rnd.Next(0, 1000);
-
-
+            //----------------Player1--------------------\\
             if (snake.CheckCollision(scorefruit.x, scorefruit.y))
             {
                 snakescore = new ScoreBonus(snakescore);
@@ -252,22 +280,112 @@ namespace SnakeGIT
                 snakehp = new HpBonus(snakehp);
                 snakescore = new ScoreBonus(snakescore);
                 snake.tail++;
-                hpflag = false;
+                hpfruit.generateFruit(4);
+
+
+                bonusflag = false;
+
+                eatBonus = true;
             }
 
-            if (snake.CheckCollision(hpfruit.x, hpfruit.y) && dice >= 0 && !hpflag)
+            if (snake.CheckCollision(speedfruit.x, speedfruit.y))
+            {
+                snakescore = new ScoreBonus(snakescore);
+                snakespeed = new SpeedBonus(snakespeed);
+                snake.tail++;
+                speedfruit.generateFruit(4);
+                speed = true;
+
+
+                bonusflag = false;
+
+                eatBonus = true;
+            }
+
+            if (dice <= 5 && !bonusflag && bonusTime == 120)
             {
                 hpfruit.generateFruit(2);
-                hpflag = true;
+                bonusflag = true;
+                eatBonus = false;
+                bonusTime = 0;
+            }
+
+            if (dice > 5 && !bonusflag && !speed && bonusTime == 120)
+            {
+                speedfruit.generateFruit(3);
+                bonusflag = true;
+                eatBonus = false;
+                bonusTime = 0;
+            }
+
+            if (speed)
+            {
+                speedFrame++;
+                if (speedFrame == 300)
+                {
+                    speed = false;
+                    snakespeed.speed = 6;
+                    speedFrame = 0;
+                    bonusTime = 0;
+                }
             }
 
 
-
-            if (snake2.CheckCollision(apple2.x, apple2.y))
+            //----------------Player2------------------\\
+            if (snake2.CheckCollision(score2fruit.x, score2fruit.y))
             {
+                snake2score = new ScoreBonus(snake2score);
                 snake2.tail++;
-                snake2.score++;
-                apple2.generateFruit();
+                score2fruit.generateFruit(1);
+
+            }
+            if (snake2.CheckCollision(hp2fruit.x, hp2fruit.y))
+            {
+                snake2hp = new HpBonus(snake2hp);
+                snake2score = new ScoreBonus(snake2score);
+                snake2.tail++;
+                hp2fruit.generateFruit(4);
+                bonus2flag = false;
+
+                eat2Bonus = true;
+            }
+
+            if (snake2.CheckCollision(speed2fruit.x, speed2fruit.y))
+            {
+                snake2score = new ScoreBonus(snake2score);
+                snake2speed = new SpeedBonus(snake2speed);
+                snake2.tail++;
+                speed2 = true;
+                speed2fruit.generateFruit(4);
+                bonus2flag = false;
+
+                eat2Bonus = true;
+            }
+            if (dice2 <= 5 && !bonus2flag && bonus2Time == 120)
+            {
+                hp2fruit.generateFruit(2);
+                bonus2flag = true;
+                eat2Bonus = false;
+                bonus2Time = 0;
+            }
+            if (dice2 > 5 && !bonus2flag && !speed2 && bonus2Time == 120)
+            {
+                speed2fruit.generateFruit(3);
+                bonus2flag = true;
+                bonus2Time = 0;
+                eat2Bonus = false;
+            }
+
+            if (speed2)
+            {
+                speed2Frame++;
+                if (speed2Frame == 300)
+                {
+                    speed2 = false;
+                    snake2speed.speed = 6;
+                    speed2Frame = 0;
+                    bonus2Time = 0;
+                }
             }
 
 
@@ -284,26 +402,34 @@ namespace SnakeGIT
 
             d2dRenderTarget.DrawText("Score", text.TextFormatStats, new RectangleF(870, 1, 100, 100), new SolidColorBrush(d2dRenderTarget, Color.Black));
             d2dRenderTarget.DrawText($"{snakescore.score}", text.TextFormatStats, new RectangleF(775, 100, 100, 100), new SolidColorBrush(d2dRenderTarget, Color.Black));
-            d2dRenderTarget.DrawText($"{snake2.score}", text.TextFormatStats, new RectangleF(975, 100, 100, 100), new SolidColorBrush(d2dRenderTarget, Color.Black));
+            d2dRenderTarget.DrawText($"{snake2score.score}", text.TextFormatStats, new RectangleF(975, 100, 100, 100), new SolidColorBrush(d2dRenderTarget, Color.Black));
 
 
             //apple.Draw(d2dRenderTarget, d2dFactory);
-            apple2.Draw(d2dRenderTarget, d2dFactory);
+            //apple2.Draw(d2dRenderTarget, d2dFactory);
             snake.Draw(d2dRenderTarget, d2dFactory);
             snake2.Draw(d2dRenderTarget, d2dFactory);
             for (int i = 0; i < snakehp.hp; i++)
             {
                 hp.Draw(d2dRenderTarget, d2dFactory, 30 + Constants.SPRITE_SIZE * i, Constants.SPRITE_SIZE * 26);
             }
-            for (int i = 0; i < snake2.hp; i++)
+            for (int i = 0; i < snake2hp.hp; i++)
             {
                 hp.Draw(d2dRenderTarget, d2dFactory, 1020 + Constants.SPRITE_SIZE * i, Constants.SPRITE_SIZE * 26);
             }
 
             map.generateMAP(d2dRenderTarget, d2dFactory, 1);
             map.generateMAP(d2dRenderTarget, d2dFactory, 2);
+
+
             scorefruit.Draw(d2dRenderTarget, d2dFactory);
             hpfruit.Draw(d2dRenderTarget, d2dFactory);
+            speedfruit.Draw(d2dRenderTarget, d2dFactory);
+
+
+            score2fruit.Draw(d2dRenderTarget, d2dFactory);
+            hp2fruit.Draw(d2dRenderTarget, d2dFactory);
+            speed2fruit.Draw(d2dRenderTarget, d2dFactory);
 
             d2dRenderTarget.EndDraw();
             swapChain.Present(0, PresentFlags.None);
