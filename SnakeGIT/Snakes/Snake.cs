@@ -12,7 +12,6 @@ namespace SnakeGIT
         public int tail = Constants.INITIAL_TAIL;
         public int dx;
         public int dy;
-        public int speed = 6;
 
 
         public bool death;

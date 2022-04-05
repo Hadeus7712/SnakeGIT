@@ -324,7 +324,7 @@ namespace SnakeGIT
                 if (speedFrame == 300)
                 {
                     speed = false;
-                    snakespeed.speed = 6;
+                    snakespeed.speed = Constants.SPEED;
                     speedFrame = 0;
                     bonusTime = 0;
                 }
@@ -382,7 +382,7 @@ namespace SnakeGIT
                 if (speed2Frame == 300)
                 {
                     speed2 = false;
-                    snake2speed.speed = 6;
+                    snake2speed.speed = Constants.SPEED;
                     speed2Frame = 0;
                     bonus2Time = 0;
                 }

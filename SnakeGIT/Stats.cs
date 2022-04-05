@@ -25,7 +25,7 @@
         public override void SetStats()
         {
             hp = Constants.HP;
-            speed = 6;
+            speed = Constants.SPEED;
             score = 0;
         }
     }
@@ -39,7 +39,7 @@
         public override void SetStats()
         {
             hp = Constants.HP;
-            speed = 6;
+            speed = Constants.SPEED;
             score = 0;
         }
     }

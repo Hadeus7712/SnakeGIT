@@ -8,26 +8,32 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using SharpDX.DirectInput;
+
 namespace SnakeGIT
 {
     public partial class Form1 : Form
     {
+        public Keyboard keyboard;
+
         public Form1()
         {
             InitializeComponent();
+            init();
+        }
+
+        public void init()
+        {
+            var directInput = new DirectInput();
+            keyboard = new Keyboard(directInput);
+            keyboard.Acquire();
         }
 
         private async void start_Click(object sender, EventArgs e)
         {
-            start.Visible = false; 
-            three.Visible = true;
-            await Task.Delay(1000);
-            three.Visible = false;
-            two.Visible = true;
-            await Task.Delay(1000);
-            two.Visible = false;
-            one.Visible = true;
-            await Task.Delay(1000);
+            await Task.Delay(500);
+
+
 
             using (var game = new SnakeGame())
             {
@@ -38,3 +44,4 @@ namespace SnakeGIT
 
     }
 }
+

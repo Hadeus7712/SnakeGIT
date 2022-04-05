@@ -9,7 +9,6 @@ namespace SnakeGIT
     {
         public new int dx;
         public new int dy;
-        public new int speed = 6;
 
         public new bool death;
         public new void Update()

@@ -9,6 +9,8 @@
 
         public const int HP = 5;
 
+        public const int SPEED = 5;
+
         public const int MAPX = 1;
         public const int MAPY = 1;
         public const int MAPSIZE = 24;
