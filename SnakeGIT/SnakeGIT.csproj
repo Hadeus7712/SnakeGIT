@@ -81,7 +81,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Decorator.cs" />
     <Compile Include="Draw\HealthBar.cs" />
+    <Compile Include="Bonus\HpBonus.cs" />
+    <Compile Include="Bonus\ScoreBonus.cs" />
+    <Compile Include="Snakes\Snake2Stats.cs" />
+    <Compile Include="Snakes\SnakeStats.cs" />
+    <Compile Include="Bonus\SpeedBonus.cs" />
     <Compile Include="Stats.cs" />
     <Compile Include="Draw\Text.cs" />
     <Compile Include="Fruits\Fruits.cs" />
@@ -112,7 +118,9 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="Content\arrows-computer-keyboard-buttons-desktop-interface-web-icon-gaming-and-cybersport_100456-6081.webp" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -136,8 +144,25 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="Content\AAction.png" />
+    <Content Include="Content\ArrowDownAction.png" />
+    <Content Include="Content\ArrowDownState.png" />
+    <Content Include="Content\ArrowLeftAction.png" />
+    <Content Include="Content\ArrowLeftState.png" />
+    <Content Include="Content\ArrowRightAction.png" />
+    <Content Include="Content\ArrowRightState.png" />
     <Content Include="Content\ArrowsPNG.png" />
+    <Content Include="Content\ArrowUpAction.png" />
+    <Content Include="Content\ArrowUpState.png" />
+    <Content Include="Content\AState.png" />
+    <Content Include="Content\DAction.png" />
+    <Content Include="Content\DState.png" />
+    <Content Include="Content\SAction.png" />
+    <Content Include="Content\SState.png" />
+    <Content Include="Content\WAction.png" />
+    <Content Include="Content\wasd-keys-game-control-keyboard-260nw-1488113183.jpg" />
     <Content Include="Content\WASDPNG.png" />
+    <Content Include="Content\WState.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

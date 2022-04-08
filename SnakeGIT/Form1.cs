@@ -14,33 +14,50 @@ namespace SnakeGIT
 {
     public partial class Form1 : Form
     {
+
         public Keyboard keyboard;
 
         public Form1()
         {
             InitializeComponent();
-            init();
         }
 
-        public void init()
+
+
+
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            var directInput = new DirectInput();
-            keyboard = new Keyboard(directInput);
-            keyboard.Acquire();
+
+            if (e.KeyCode == Keys.W) buttonW.Image = Properties.Resources.WAction;
+            if (e.KeyCode == Keys.S) buttonS.Image = Properties.Resources.SAction;
+            if (e.KeyCode == Keys.A) buttonA.Image = Properties.Resources.AAction;
+            if (e.KeyCode == Keys.D) buttonD.Image = Properties.Resources.DAction;
+
+            if (e.KeyCode == Keys.Up) buttonUp.Image = Properties.Resources.ArrowUpAction;
+            if (e.KeyCode == Keys.Down) buttonDown.Image = Properties.Resources.ArrowDownAction;
+            if (e.KeyCode == Keys.Left) buttonLeft.Image = Properties.Resources.ArrowLeftAction;
+            if (e.KeyCode == Keys.Right) buttonRight.Image = Properties.Resources.ArrowRightAction;
+
+
+            if(e.KeyCode == Keys.Space) using(var game = new SnakeGame())
+                {
+                    game.Run();
+                }
         }
 
-        private async void start_Click(object sender, EventArgs e)
+        private void Form1_KeyUp(object sender, KeyEventArgs e)
         {
-            await Task.Delay(500);
+            buttonW.Image = Properties.Resources.WState;
+            buttonS.Image = Properties.Resources.SState;
+            buttonA.Image = Properties.Resources.AState;
+            buttonD.Image = Properties.Resources.DState;
 
-
-
-            using (var game = new SnakeGame())
-            {
-                game.Run();
-            }
-
+            buttonUp.Image = Properties.Resources.ArrowUpState;
+            buttonDown.Image = Properties.Resources.ArrowDownState;
+            buttonLeft.Image = Properties.Resources.ArrowLeftState;
+            buttonRight.Image = Properties.Resources.ArrowRightState;
         }
+
 
     }
 }

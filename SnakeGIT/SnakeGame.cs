@@ -30,6 +30,7 @@ namespace SnakeGIT
     public partial class SnakeGame : IDisposable
     {
 
+
         Text text;
 
         RenderForm form;
@@ -150,13 +151,13 @@ namespace SnakeGIT
             rng = new Random();
             rnd = new Random(2);
 
-            hpfruit = new Fruits1();
+            hpfruit = new Fruits1() { x = 100, y = 100 };
             scorefruit = new Fruits1() { x = 5, y = 5 };
-            speedfruit = new Fruits1();
+            speedfruit = new Fruits1() { x = 100, y = 100 };
 
-            hp2fruit = new Fruits2();
+            hp2fruit = new Fruits2() { x = 100, y = 100 };
             score2fruit = new Fruits2() { x = 48, y = 5 };
-            speed2fruit = new Fruits2();
+            speed2fruit = new Fruits2() { x = 100, y = 100 };
 
 
             // SwapChain description
@@ -228,7 +229,8 @@ namespace SnakeGIT
 
             if (snake.HandleInput())
             {
-                System.Diagnostics.Process.GetCurrentProcess().Kill();
+                form.Close();
+                
             }
             snake.HandleInput();
             snake2.HandleInput();
@@ -261,6 +263,7 @@ namespace SnakeGIT
             {
                 bonus2Time++;
             }
+
 
 
             dice = rnd.Next(0, 10);
@@ -302,7 +305,7 @@ namespace SnakeGIT
                 eatBonus = true;
             }
 
-            if (dice <= 5 && !bonusflag && bonusTime == 120)
+            if (dice <= 3 && !bonusflag && bonusTime == Constants.COUNTDOWN)
             {
                 hpfruit.generateFruit(2);
                 bonusflag = true;
@@ -310,7 +313,7 @@ namespace SnakeGIT
                 bonusTime = 0;
             }
 
-            if (dice > 5 && !bonusflag && !speed && bonusTime == 120)
+            if (dice > 3 && !bonusflag && !speed && bonusTime == Constants.COUNTDOWN)
             {
                 speedfruit.generateFruit(3);
                 bonusflag = true;
@@ -321,7 +324,7 @@ namespace SnakeGIT
             if (speed)
             {
                 speedFrame++;
-                if (speedFrame == 300)
+                if (speedFrame == Constants.SPEEDTIME)
                 {
                     speed = false;
                     snakespeed.speed = Constants.SPEED;
@@ -361,14 +364,14 @@ namespace SnakeGIT
 
                 eat2Bonus = true;
             }
-            if (dice2 <= 5 && !bonus2flag && bonus2Time == 120)
+            if (dice2 <= 3 && !bonus2flag && bonus2Time == Constants.COUNTDOWN)
             {
                 hp2fruit.generateFruit(2);
                 bonus2flag = true;
                 eat2Bonus = false;
                 bonus2Time = 0;
             }
-            if (dice2 > 5 && !bonus2flag && !speed2 && bonus2Time == 120)
+            if (dice2 > 3 && !bonus2flag && !speed2 && bonus2Time == Constants.COUNTDOWN)
             {
                 speed2fruit.generateFruit(3);
                 bonus2flag = true;
@@ -379,7 +382,7 @@ namespace SnakeGIT
             if (speed2)
             {
                 speed2Frame++;
-                if (speed2Frame == 300)
+                if (speed2Frame == Constants.SPEEDTIME)
                 {
                     speed2 = false;
                     snake2speed.speed = Constants.SPEED;
@@ -442,6 +445,7 @@ namespace SnakeGIT
             d2dRenderTarget.BeginDraw();
             d2dRenderTarget.Clear(Color.White);
             d2dRenderTarget.DrawText($"{player} win", new TextFormat(new SharpDX.DirectWrite.Factory(), "Calibri", 40), new RectangleF(700, 400, 300, 300), new SolidColorBrush(d2dRenderTarget, Color.Black));
+            d2dRenderTarget.DrawText($"Press Esc to restart", new TextFormat(new SharpDX.DirectWrite.Factory(), "Calibri", 40), new RectangleF(650, 700, 600, 300), new SolidColorBrush(d2dRenderTarget, Color.Black));
             d2dRenderTarget.EndDraw();
             swapChain.Present(0, PresentFlags.None);
         }
