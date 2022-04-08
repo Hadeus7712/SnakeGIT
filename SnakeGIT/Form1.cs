@@ -47,15 +47,15 @@ namespace SnakeGIT
 
         private void Form1_KeyUp(object sender, KeyEventArgs e)
         {
-            buttonW.Image = Properties.Resources.WState;
-            buttonS.Image = Properties.Resources.SState;
-            buttonA.Image = Properties.Resources.AState;
-            buttonD.Image = Properties.Resources.DState;
+            if (e.KeyCode == Keys.W)  buttonW.Image = Properties.Resources.WState;
+            if (e.KeyCode == Keys.S) buttonS.Image = Properties.Resources.SState;
+            if (e.KeyCode == Keys.A) buttonA.Image = Properties.Resources.AState;
+            if(e.KeyCode == Keys.D) buttonD.Image = Properties.Resources.DState;
 
-            buttonUp.Image = Properties.Resources.ArrowUpState;
-            buttonDown.Image = Properties.Resources.ArrowDownState;
-            buttonLeft.Image = Properties.Resources.ArrowLeftState;
-            buttonRight.Image = Properties.Resources.ArrowRightState;
+            if(e.KeyCode == Keys.Up) buttonUp.Image = Properties.Resources.ArrowUpState;
+            if(e.KeyCode == Keys.Down) buttonDown.Image = Properties.Resources.ArrowDownState;
+            if (e.KeyCode == Keys.Left) buttonLeft.Image = Properties.Resources.ArrowLeftState;
+            if(e.KeyCode == Keys.Right) buttonRight.Image = Properties.Resources.ArrowRightState;
         }
 
 
