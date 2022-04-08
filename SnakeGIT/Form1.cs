@@ -15,8 +15,6 @@ namespace SnakeGIT
     public partial class Form1 : Form
     {
 
-        public Keyboard keyboard;
-
         public Form1()
         {
             InitializeComponent();
@@ -25,7 +23,7 @@ namespace SnakeGIT
 
 
 
-        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        private async void Form1_KeyDown(object sender, KeyEventArgs e)
         {
 
             if (e.KeyCode == Keys.W) buttonW.Image = Properties.Resources.WAction;
@@ -41,6 +39,7 @@ namespace SnakeGIT
 
             if(e.KeyCode == Keys.Space) using(var game = new SnakeGame())
                 {
+                    await Task.Delay(500);
                     game.Run();
                 }
         }

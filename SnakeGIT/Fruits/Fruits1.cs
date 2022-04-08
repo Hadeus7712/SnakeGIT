@@ -7,7 +7,6 @@ namespace SnakeGIT
         Random rnd = new Random(1);
         Random rng = new Random(3);
         Random rnd1 = new Random(5);
-        Snake snake = new Snake();
 
         public void generateFruit(int a)
         {

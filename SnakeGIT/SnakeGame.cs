@@ -84,7 +84,7 @@ namespace SnakeGIT
         {
             form = new RenderForm("Snake");
             form.ClientSize = new System.Drawing.Size(Constants.SCREEN_SIZE * Constants.SPRITE_SIZE, Constants.SCREEN_SIZE * Constants.SPRITE_SIZE / 2);
-            form.AllowUserResizing = false;
+            //form.AllowUserResizing = false;
         }
 
         public void Dispose()
