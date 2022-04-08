@@ -81,14 +81,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Decorator.cs" />
+    <Compile Include="Snakes\Decorator.cs" />
     <Compile Include="Draw\HealthBar.cs" />
     <Compile Include="Bonus\HpBonus.cs" />
     <Compile Include="Bonus\ScoreBonus.cs" />
     <Compile Include="Snakes\Snake2Stats.cs" />
     <Compile Include="Snakes\SnakeStats.cs" />
     <Compile Include="Bonus\SpeedBonus.cs" />
-    <Compile Include="Stats.cs" />
+    <Compile Include="Snakes\Stats.cs" />
     <Compile Include="Draw\Text.cs" />
     <Compile Include="Fruits\Fruits.cs" />
     <Compile Include="Fruits\Fruits1.cs" />
