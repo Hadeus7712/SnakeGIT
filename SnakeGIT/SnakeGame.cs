@@ -84,7 +84,7 @@ namespace SnakeGIT
         {
             form = new RenderForm("Snake");
             form.ClientSize = new System.Drawing.Size(Constants.SCREEN_SIZE * Constants.SPRITE_SIZE, Constants.SCREEN_SIZE * Constants.SPRITE_SIZE / 2);
-            //form.AllowUserResizing = false;
+            form.AllowUserResizing = false;
         }
 
         public void Dispose()
@@ -114,7 +114,6 @@ namespace SnakeGIT
             if (sleeping) return;
             stopwatch = Stopwatch.StartNew();
             Update();
-            //Draw();
 
 
             if (snakehp.hp > 0 && snake2hp.hp > 0 && snakescore.score < 100 && snake2score.score < 100) Draw();
@@ -136,8 +135,6 @@ namespace SnakeGIT
 
         protected void Initialize()
         {
-            apple = new Fruits1() { x = 13, y = 3 };
-            apple2 = new Fruits2() { x = 48, y = 3 };
             snake = new Snake() { x = 12, y = 12, dy = 1 };
             snake2 = new Snake2() { x = 47, y = 12, dy = 1 };
 
@@ -205,8 +202,7 @@ namespace SnakeGIT
             snake.init();
             snake2.init();
 
-            apple.Initialize(d2dRenderTarget, red);
-            apple2.Initialize(d2dRenderTarget, red);
+
             snake.Initialize(d2dRenderTarget, green);
             snake2.Initialize(d2dRenderTarget, Color.DarkOliveGreen);
 
@@ -408,8 +404,6 @@ namespace SnakeGIT
             d2dRenderTarget.DrawText($"{snake2score.score}", text.TextFormatStats, new RectangleF(975, 100, 100, 100), new SolidColorBrush(d2dRenderTarget, Color.Black));
 
 
-            //apple.Draw(d2dRenderTarget, d2dFactory);
-            //apple2.Draw(d2dRenderTarget, d2dFactory);
             snake.Draw(d2dRenderTarget, d2dFactory);
             snake2.Draw(d2dRenderTarget, d2dFactory);
             for (int i = 0; i < snakehp.hp; i++)

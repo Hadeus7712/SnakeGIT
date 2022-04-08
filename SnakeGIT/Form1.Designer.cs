@@ -94,7 +94,7 @@ namespace SnakeGIT
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label5.Location = new System.Drawing.Point(233, 215);
+            this.label5.Location = new System.Drawing.Point(223, 280);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(140, 39);
             this.label5.TabIndex = 11;
@@ -104,7 +104,7 @@ namespace SnakeGIT
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label6.Location = new System.Drawing.Point(233, 281);
+            this.label6.Location = new System.Drawing.Point(540, 280);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(102, 39);
             this.label6.TabIndex = 12;
@@ -114,7 +114,7 @@ namespace SnakeGIT
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label7.Location = new System.Drawing.Point(233, 347);
+            this.label7.Location = new System.Drawing.Point(783, 280);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(208, 39);
             this.label7.TabIndex = 13;
@@ -195,7 +195,7 @@ namespace SnakeGIT
             // pictureBox5
             // 
             this.pictureBox5.BackColor = System.Drawing.Color.Purple;
-            this.pictureBox5.Location = new System.Drawing.Point(133, 326);
+            this.pictureBox5.Location = new System.Drawing.Point(852, 152);
             this.pictureBox5.Name = "pictureBox5";
             this.pictureBox5.Size = new System.Drawing.Size(60, 60);
             this.pictureBox5.TabIndex = 6;
@@ -204,7 +204,7 @@ namespace SnakeGIT
             // pictureBox4
             // 
             this.pictureBox4.BackColor = System.Drawing.Color.PowderBlue;
-            this.pictureBox4.Location = new System.Drawing.Point(133, 194);
+            this.pictureBox4.Location = new System.Drawing.Point(266, 152);
             this.pictureBox4.Name = "pictureBox4";
             this.pictureBox4.Size = new System.Drawing.Size(60, 60);
             this.pictureBox4.TabIndex = 5;
@@ -213,7 +213,7 @@ namespace SnakeGIT
             // pictureBox3
             // 
             this.pictureBox3.BackColor = System.Drawing.Color.Red;
-            this.pictureBox3.Location = new System.Drawing.Point(133, 260);
+            this.pictureBox3.Location = new System.Drawing.Point(547, 152);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(60, 60);
             this.pictureBox3.TabIndex = 4;
