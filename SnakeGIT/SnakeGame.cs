@@ -51,8 +51,8 @@ namespace SnakeGIT
         Color red = Color.Red;
         Color green = Color.Green;
 
-        Fruits1 apple, hpfruit, scorefruit, speedfruit;
-        Fruits2 apple2, hp2fruit, score2fruit, speed2fruit;
+        Fruits1 hpfruit, scorefruit, speedfruit;
+        Fruits2 hp2fruit, score2fruit, speed2fruit;
         Snake snake;
         Snake2 snake2;
 
@@ -116,7 +116,7 @@ namespace SnakeGIT
             Update();
 
 
-            if (snakehp.hp > 0 && snake2hp.hp > 0 && snakescore.score < 100 && snake2score.score < 100) Draw();
+            if (snakehp.hp > 0 && snake2hp.hp > 0 && snakescore.score < Constants.WINSCORE && snake2score.score < Constants.WINSCORE) Draw();
             else if (snakescore.score >= 100 || snake2hp.hp <= 0) Win("Player1");
             else if (snake2score.score >= 100 || snakehp.hp <= 0) Win("Player2");
 
@@ -226,7 +226,7 @@ namespace SnakeGIT
             if (snake.HandleInput())
             {
                 form.Close();
-                
+
             }
             snake.HandleInput();
             snake2.HandleInput();
@@ -238,7 +238,6 @@ namespace SnakeGIT
                 {
                     snakehp.hp--;
                 }
-                snake.HandleInput();
             }
             if (frame % snake2speed.speed == 0)
             {
@@ -247,7 +246,6 @@ namespace SnakeGIT
                 {
                     snake2hp.hp--;
                 }
-                snake2.HandleInput();
             }
             frame++;
 
@@ -408,7 +406,7 @@ namespace SnakeGIT
             snake2.Draw(d2dRenderTarget, d2dFactory);
             for (int i = 0; i < snakehp.hp; i++)
             {
-                hp.Draw(d2dRenderTarget, d2dFactory, 30 + Constants.SPRITE_SIZE * i, Constants.SPRITE_SIZE * 26);
+                hp.Draw(d2dRenderTarget, d2dFactory, Map.leftX + Constants.SPRITE_SIZE * i, Constants.SPRITE_SIZE * 26);
             }
             for (int i = 0; i < snake2hp.hp; i++)
             {

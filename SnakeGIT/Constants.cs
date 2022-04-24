@@ -15,6 +15,8 @@
 
         public const int SPEEDTIME = 600;
 
+        public const int WINSCORE = 50;
+
         public const int MAPX = 1;
         public const int MAPY = 1;
         public const int MAPSIZE = 24;
